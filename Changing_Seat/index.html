@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Jua&display=swap"
+      rel="stylesheet"
+    />
+    <style media="screen">
+      table {
+        width: 90%;
+        border-spacing: 0px 10px;
+      }
+      th,
+      td {
+        border: 1px solid black;
+        text-align: center;
+        font-size: 20px;
+        /* <<<<<<< HEAD */
+        width: 50%;
+        /* ======= */
+        width: 50%;
+        /* >>>>>>> 69370c47247e4f5127cc03571fa4fc7798ffb7fa */
+      }
+      h1 {
+        text-align: center;
+        font-family: "Jua", sans-serif;
+        font-size: 40px;
+      }
+      input[type="button"] {
+        background-color: #55bd7e;
+        border: none;
+        color: white;
+        padding: 10px 25px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        font-family: "Jua", sans-serif;
+      }
+      input[type="text"] {
+        width: 100px;
+        height: 35px;
+        text-align: center;
+        font-size: 16px;
+        font-family: "Jua", sans-serif;
+      }
+    </style>
+    <meta charset="utf-8" />
+    <title>랜덤 좌석 배정 프로그램</title>
+  </head>
+  <body>
+    <h1>랜덤 좌석 배정 프로그램</h1>
+
+    <input type="text" id="numOfPeople" placeholder="학생 수 입력" />
+    <input
+      type="button"
+      id="selected"
+      name="random"
+      value="좌석 배정"
+      onclick="
+      if(document.querySelector('#selected').value === '좌석 배정'){
+          input(); //함수이름이 input이었네... shit..
+          document.querySelector('#selected').value = '다시 하기';
+      } else {
+          input(); //함수이름이 input임....
+      }
+  "
+    />
+    <br />
+    <br />
+    <script type="text/javascript" src="makeTable.js"></script>
+    <script>
+      var seat = {};
+      var numOfPeople;
+
+      function input() {
+        var input = document.getElementById("numOfPeople").value;
+        numOfPeople = input;
+
+        //자리배정 인원 : 최소 2명 ~ 최대 100
+        if (numOfPeople == "") {
+          alert("인원을 입력하세요.");
+          history.back();
+        } else if (numOfPeople < 2) {
+          alert("자리배정 인원은 최소 2명 이상이어야 합니다.");
+          history.back();
+        } else if (numOfPeople > 100) {
+          alert("자리배정은 최대 100명까지 가능합니다.");
+          history.back();
+        } else {
+          randomSeat(numOfPeople);
+        }
+      }
+
+      function randomSeat(num) {
+        var student = num;
+
+        var i = 0;
+        var j = 0;
+        var max = num;
+
+        for (i = 0; i < student; i++) {
+          // 1~20까지의 수를 랜덤하게 뽑음
+          seat[i] = Math.floor(Math.random() * max) + 1;
+          //Check the overlap
+          for (j = 0; j < i; j++) {
+            if (seat[i] == seat[j]) i--;
+          }
+        }
+        for (i = 0; i < student; i++) {
+          console.log(seat[i]);
+        }
+        makeTable(student, seat);
+      }
+    </script>
+    <br />
+
+    <div id="line1" style="width: 33%; float: left">
+      <script type="text/javascript">
+        document.write("<table>");
+        for (i = 0; i < 4; i++) {
+          document.write("<tr>");
+          for (j = 0; j < 2; j++) {
+            document.write("<td>" + "O" + "</td>");
+          }
+          document.write("</tr>");
+        }
+        document.write("</table><br/>");
+      </script>
+    </div>
+
+    <div id="line2" style="width: 33%; float: left">
+      <script type="text/javascript">
+        document.write("<table>");
+        for (i = 4; i < 7; i++) {
+          document.write("<tr>");
+          for (j = 0; j < 2; j++) {
+            document.write("<td>" + "O" + "</td>");
+          }
+          document.write("</tr>");
+        }
+        document.write("</table><br/>");
+      </script>
+    </div>
+
+    <div id="line3" style="width: 33%; float: left">
+      <script type="text/javascript">
+        document.write("<table>");
+        for (i = 7; i < 10; i++) {
+          document.write("<tr>");
+          for (j = 0; j < 2; j++) {
+            document.write("<td>" + "O" + "</td>");
+          }
+          document.write("</tr>");
+        }
+        document.write("</table><br/>");
+      </script>
+    </div>
+  </body>
+</html>
